@@ -1,0 +1,218 @@
+<!-- ═══════════════════════════════════════════════════════════ --><!-- ⛪ SECCIÓN: CEREMONIA                                       --><!-- ═══════════════════════════════════════════════════════════ -->
+<section class="relative w-full pt-4 pb-12 sm:py-20 md:py-24 lg:py-32">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- 📇 CARD DE CEREMONIA - HORIZONTAL -->
+        <div class="flex justify-center">
+            <div
+                class="relative w-full max-w-md sm:max-w-lg md:max-w-xl"
+                id="card-ceremonia"
+            >
+                <!-- BOTÓN DECORATIVO SUPERIOR -->
+                <div
+                    class="absolute z-20"
+                    style="top: -30px; left: 50%; transform: translateX(-50%);"
+                >
+                    <div class="w-16 h-16" id="boton-decorativo-ceremonia">
+                        <img
+                            src="/imagenes/boton.png"
+                            alt="Decoración"
+                            class="w-full h-full object-contain"
+                        />
+                    </div>
+                </div>
+
+                <div
+                    class="relative rounded-2xl shadow-xl overflow-hidden"
+                    style="background-color: #F6F1E7;"
+                >
+                    <!-- IMAGEN DE FONDO -->
+                    <img
+                        src="/imagenes/fondoplomo.png"
+                        alt="Fondo ceremonia"
+                        class="absolute inset-0 w-full h-full object-cover opacity-90"
+                    />
+
+                    <!-- Contenido de la card - LAYOUT CON TÍTULO EXTENDIDO -->
+                    <div
+                        class="relative px-4 pt-14 pb-8 sm:px-8 sm:pt-16 sm:pb-10 md:px-10 md:pt-16 md:pb-12 z-10"
+                    >
+                        <!-- TÍTULO: CEREMONIA RELIGIOSA - OCUPA TODO EL ANCHO -->
+                        <div class="mb-2">
+                            <h2
+                                class="font-great-vibes text-4xl sm:text-4xl md:text-5xl text-[#6B1E2E] text-center"
+                                id="titulo-ceremonia"
+                            >
+                                Ceremonia Religiosa y Recepción
+                            </h2>
+                        </div>
+
+                        <!-- CONTENIDO INFERIOR CON ICONO Y TEXTOS -->
+                        <div class="flex items-center justify-between gap-4">
+                            <!-- LADO IZQUIERDO: ICONO DE IGLESIA -->
+                            <div class="flex-shrink-0 ml-4 sm:ml-6 md:ml-8">
+                                <div
+                                    class="w-24 h-24 sm:w-20 sm:h-20 md:w-24 md:h-24 icono-iglesia-color"
+                                >
+                                    <img
+                                        src="/imagenes/recepcion.png"
+                                        alt="Recepción"
+                                        class="w-full h-full object-contain"
+                                        id="icono-iglesia"
+                                    />
+                                </div>
+                            </div>
+
+                            <!-- LADO DERECHO: TEXTOS Y BOTÓN -->
+                            <div class="flex-1 text-center">
+                                <!-- NOMBRE DE LA PARROQUIA -->
+                                <div class="mb-2">
+                                    <p
+                                        class="font-crimson text-xl sm:text-lg md:text-xl texto-ceremonia font-semibold"
+                                        id="nombre-parroquia"
+                                    >
+                                        Departamento de Tarija
+                                    </p>
+                                </div>
+
+                                <!-- HORA -->
+                                <div class="mb-4">
+                                    <p
+                                        class="font-crimson text-xl sm:text-base md:text-lg leading-tight text-[#A98B57] font-semibold"
+                                        id="hora-ceremonia"
+                                    >
+                                        Hora: 14:00
+                                    </p>
+                                </div>
+
+                                <!-- BOTÓN VER UBICACIÓN -->
+                                <div class="mt-4">
+                                    <a
+                                        href="https://maps.apple.com/place?coordinate=-21.478057,-64.756504&amp;name=Departamento%20de%20Tarija&amp;map=h"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="inline-block px-4 py-2 sm:px-6 sm:py-2.5 border-2 rounded-full font-crimson text-base sm:text-sm uppercase tracking-wider transition-all duration-300 btn-ubicacion-ceremonia font-semibold"
+                                        id="btn-ubicacion"
+                                    >
+                                        VER UBICACIÓN
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 🎬 ANIMACIONES CON GSAP                                     -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    if (typeof window !== "undefined") {
+        document.addEventListener("DOMContentLoaded", () => {
+            console.log("⛪ Iniciando animaciones de ceremonia...");
+
+            gsap.fromTo(
+                "#boton-decorativo-ceremonia",
+                { opacity: 0, scale: 0, rotation: -180 },
+                {
+                    opacity: 1,
+                    scale: 1,
+                    rotation: 0,
+                    duration: 1,
+                    ease: "back.out(1.7)",
+                    scrollTrigger: {
+                        trigger: "#card-ceremonia",
+                        start: "top 80%",
+                        toggleActions: "play none none reset",
+                    },
+                },
+            );
+
+            // 🎯 ANIMACIÓN ELEGANTE DE ENTRADA - TODO AL MISMO TIEMPO
+            gsap.fromTo(
+                "#card-ceremonia",
+                {
+                    opacity: 0,
+                    scale: 0.85,
+                    y: 60,
+                    rotationY: -15,
+                },
+                {
+                    opacity: 1,
+                    scale: 1,
+                    y: 0,
+                    rotationY: 0,
+                    duration: 1.2,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: "#card-ceremonia",
+                        start: "top 80%",
+                        toggleActions: "play none none reset",
+                    },
+                },
+            );
+
+            console.log("⛪✨ ¡Animaciones de ceremonia activadas!");
+        });
+    }
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 🎨 ESTILOS CSS                                              -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<style>
+    /* Color de textos dorado #A98B57 */
+    .texto-ceremonia {
+        color: #A98B57;
+    }
+
+    /* Icono de iglesia teñido de borgoña #6B1E2E */
+    .icono-iglesia-color {
+        background-color: #6B1E2E;
+        -webkit-mask-image: url("/imagenes/recepcion.png");
+        mask-image: url("/imagenes/recepcion.png");
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+    }
+
+    .icono-iglesia-color img {
+        visibility: hidden;
+    }
+
+    /* Botón relleno borgoña #6B1E2E con texto marfil */
+    .btn-ubicacion-ceremonia {
+        background-color: #6B1E2E;
+        color: #F6F1E7;
+        border-color: #6B1E2E;
+    }
+
+    .btn-ubicacion-ceremonia:hover {
+        background-color: #5A1926;
+        border-color: #5A1926;
+        color: #F6F1E7;
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(107, 30, 46, 0.3);
+    }
+
+    /* Efecto hover en la card */
+    #card-ceremonia > div {
+        transition: all 0.4s ease;
+        transform-style: preserve-3d;
+    }
+
+    /* #card-ceremonia > div:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 10px rgba(107, 30, 46, 0.3);
+    } */
+</style>

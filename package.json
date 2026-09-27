@@ -1,0 +1,22 @@
+{
+  "name": "boda-verde",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "pdf": "astro build && node generar-pdf.mjs"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.16",
+    "astro": "^5.15.2",
+    "gsap": "^3.13.0",
+    "tailwindcss": "^4.1.16"
+  },
+  "devDependencies": {
+    "pdf-lib": "^1.17.1",
+    "playwright": "^1.63.0"
+  }
+}

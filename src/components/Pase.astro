@@ -1,0 +1,245 @@
+---
+// Pase.astro
+interface Props {
+    numeroPases: number;
+    nombreInvitado?: string;
+}
+
+const { numeroPases = 1, nombreInvitado = "" } = Astro.props;
+---
+
+<section class="relative w-full pt-10 pb-10 sm:py-20 md:py-24 lg:py-32">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-center">
+            <div class="relative w-[300px]" id="card-pase">
+
+                <!-- BOTÓN DECORATIVO SUPERIOR -->
+                <div
+                    class="absolute z-20"
+                    style="top: -30px; left: 50%; transform: translateX(-50%);"
+                >
+                    <div class="w-16 h-16" id="boton-decorativo-pase">
+                        <img
+                            src="/imagenes/boton.png"
+                            alt="Decoración"
+                            class="w-full h-full object-contain"
+                        />
+                    </div>
+                </div>
+
+                <!-- CARD PRINCIPAL -->
+                <div
+                    class="relative rounded-[40px] shadow-xl overflow-hidden"
+                    id="card-principal-pase"
+                >
+                    <!-- IMAGEN DE FONDO -->
+                    <img
+                        src="/imagenes/azul.png"
+                        alt="Fondo pase"
+                        class="absolute inset-0 w-full h-full object-cover"
+                    />
+
+                    <!-- Contenido de la card -->
+                    <div class="relative px-6 pt-16 pb-10 z-10 text-center">
+
+                        <!-- TÍTULO -->
+                        <div class="mb-6" id="titulo-pase">
+                            <h2
+                                class="font-great-vibes text-[2.5rem] text-[#F6F1E7] leading-none mb-2"
+                            >
+                                Pases
+                            </h2>
+                            <p
+                                class="font-crimson text-sm uppercase tracking-widest text-[#F6F1E7]/80 font-semibold"
+                            >
+                                ASIGNADOS
+                            </p>
+                        </div>
+
+                        <!-- NÚMERO DE PASES -->
+                        <div class="mb-4" id="numero-pase">
+                            <p
+                                class="text-[#F6F1E7] font-bold leading-none"
+                                style="font-size: 5rem; text-shadow: 0 4px 16px rgba(0,0,0,0.2);"
+                            >
+                                {numeroPases}
+                            </p>
+                            <p
+                                class="font-crimson text-base uppercase tracking-[0.3em] text-[#F6F1E7]/80 mt-1"
+                            >
+                                {numeroPases === 1 ? "Pase" : "Pases"}
+                            </p>
+                        </div>
+
+                        <!-- SEPARADOR -->
+                        <div class="flex items-center justify-center gap-2 my-4">
+                            <div class="w-10 h-px bg-[#D4AF37]/60"></div>
+                            <div class="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></div>
+                            <div class="w-10 h-px bg-[#D4AF37]/60"></div>
+                        </div>
+
+                        <!-- NOMBRE DEL INVITADO (opcional) -->
+                        {
+                            nombreInvitado && (
+                                <p class="font-great-vibes text-[#F6F1E7] text-2xl mb-4">
+                                    {nombreInvitado}
+                                </p>
+                            )
+                        }
+
+                        <!-- TEXTO DESCRIPTIVO -->
+                        <div id="texto-pase">
+                            <p
+                                class="font-crimson text-lg leading-relaxed text-[#F6F1E7]/90 italic"
+                            >
+                                {
+                                    numeroPases === 1
+                                        ? "Esperamos contar con tu presencia"
+                                        : numeroPases === 2
+                                          ? "Esperamos contar con la presencia de ambos"
+                                          : `Esperamos contar con la presencia de los ${numeroPases}`
+                                }
+                            </p>
+                        </div>
+
+                        <!-- ICONOS DE PERSONAS -->
+                        <div class="flex justify-center gap-3 mt-6" id="iconos-pase">
+                            {
+                                Array.from({ length: numeroPases }).map((_, index) => (
+                                    <div
+                                        class="w-9 h-9 rounded-full bg-[#F6F1E7]/20 border border-[#F6F1E7]/40 flex items-center justify-center"
+                                        style={`animation-delay: ${index * 0.2}s;`}
+                                    >
+                                        <svg
+                                            class="w-5 h-5 text-[#F6F1E7]"
+                                            fill="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                                        </svg>
+                                    </div>
+                                ))
+                            }
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 🎬 ANIMACIONES CON GSAP                                     -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    if (typeof window !== "undefined") {
+        document.addEventListener("DOMContentLoaded", () => {
+            gsap.fromTo(
+                "#boton-decorativo-pase",
+                { opacity: 0, scale: 0, rotation: -180 },
+                {
+                    opacity: 1,
+                    scale: 1,
+                    rotation: 0,
+                    duration: 1,
+                    ease: "back.out(1.7)",
+                    scrollTrigger: {
+                        trigger: "#card-pase",
+                        start: "top 80%",
+                        toggleActions: "play none none reset",
+                    },
+                },
+            );
+
+            gsap.fromTo(
+                "#card-principal-pase",
+                { opacity: 0, y: 50, scale: 0.95 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    duration: 1,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: "#card-pase",
+                        start: "top 80%",
+                        toggleActions: "play none none reset",
+                    },
+                },
+            );
+
+            gsap.fromTo(
+                "#titulo-pase",
+                { opacity: 0, y: -20 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: "#card-pase",
+                        start: "top 80%",
+                        toggleActions: "play none none reset",
+                    },
+                },
+            );
+
+            gsap.fromTo(
+                "#numero-pase",
+                { opacity: 0, scale: 0.8 },
+                {
+                    opacity: 1,
+                    scale: 1,
+                    duration: 1,
+                    delay: 0.2,
+                    ease: "back.out(1.4)",
+                    scrollTrigger: {
+                        trigger: "#card-pase",
+                        start: "top 80%",
+                        toggleActions: "play none none reset",
+                    },
+                },
+            );
+
+            gsap.fromTo(
+                "#texto-pase",
+                { opacity: 0, y: 20 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    delay: 0.4,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: "#card-pase",
+                        start: "top 80%",
+                        toggleActions: "play none none reset",
+                    },
+                },
+            );
+
+            gsap.fromTo(
+                "#iconos-pase",
+                { opacity: 0, y: 20 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    delay: 0.6,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: "#card-pase",
+                        start: "top 80%",
+                        toggleActions: "play none none reset",
+                    },
+                },
+            );
+        });
+    }
+</script>
