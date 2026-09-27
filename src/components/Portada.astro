@@ -74,15 +74,59 @@
     </div>
 </section>
 
+<!-- Clic del sello: se engancha apenas aparece el botón, sin esperar a que
+     carguen las animaciones del resto de la invitación (en celulares con señal
+     regular eso tardaba varios segundos y el sello parecía no funcionar) -->
+<script is:inline>
+    (function () {
+        var btnSello = document.getElementById("btn-sello");
+        var portada = document.getElementById("portada-sobre");
+        var abierto = false;
+
+        btnSello &&
+            btnSello.addEventListener("click", function () {
+                if (abierto) return;
+                abierto = true;
+
+                // Crear y reproducir música automáticamente
+                var audio = new Audio("/musica/melodia.mp3");
+                audio.loop = true;
+                audio.volume = 0.5;
+                audio.play().catch(function (error) {
+                    console.log("Error al reproducir audio:", error);
+                });
+
+                // Guardar en window para que NombresFlores pueda controlarlo
+                window.audioGlobal = audio;
+                window.estaReproduciendoGlobal = true;
+
+                // Actualizar iconos inmediatamente
+                setTimeout(function () {
+                    var iconoPlay = document.getElementById("icono-play");
+                    var iconoPause = document.getElementById("icono-pause");
+                    if (iconoPlay && iconoPause) {
+                        iconoPlay.classList.add("hidden");
+                        iconoPause.classList.remove("hidden");
+                    }
+                }, 100);
+
+                // Desvanecer la portada y quitarla
+                document.body.style.overflow = "auto";
+                portada.style.transition = "opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)";
+                portada.style.opacity = "0";
+                setTimeout(function () {
+                    portada.remove(); // Eliminar completamente del DOM
+                }, 800);
+            });
+    })();
+</script>
+
 <script>
     import { gsap } from "gsap";
 
     document.addEventListener("DOMContentLoaded", () => {
-        const btnSello = document.getElementById("btn-sello");
-        const sobreIzq = document.getElementById("sobre-izq");
-        const sobreDer = document.getElementById("sobre-der");
-        const portada = document.getElementById("portada-sobre");
-        const contenido = document.getElementById("contenido-revelado");
+        // Si ya abrieron el sobre antes de que cargue esto, no hay nada que animar
+        if (!document.getElementById("btn-sello")) return;
 
         // Animación de entrada sutil del sello (SIN cambios de opacidad)
         gsap.from("#btn-sello", {
@@ -99,44 +143,6 @@
             ease: "sine.inOut",
             yoyo: true,
             repeat: -1,
-        });
-
-        btnSello?.addEventListener("click", () => {
-            // Crear y reproducir música automáticamente
-            const audio = new Audio("/musica/melodia.mp3");
-            audio.loop = true;
-            audio.volume = 0.5;
-            audio.play().catch((error: any) => {
-                console.log("Error al reproducir audio:", error);
-            });
-
-            // Guardar en window para que NombresFlores pueda controlarlo
-            (window as any).audioGlobal = audio;
-            (window as any).estaReproduciendoGlobal = true;
-
-            // Actualizar iconos inmediatamente
-            setTimeout(() => {
-                const iconoPlay = document.getElementById("icono-play");
-                const iconoPause = document.getElementById("icono-pause");
-
-                if (iconoPlay && iconoPause) {
-                    iconoPlay.classList.add("hidden");
-                    iconoPause.classList.remove("hidden");
-                    console.log("✅ Iconos actualizados a PAUSE");
-                }
-            }, 100);
-
-            gsap.to(portada, {
-                opacity: 0,
-                duration: 0.8,
-                ease: "power2.out",
-                onStart: () => {
-                    document.body.style.overflow = "auto";
-                },
-                onComplete: () => {
-                    portada?.remove(); // Eliminar completamente del DOM
-                },
-            });
         });
     });
 </script>
