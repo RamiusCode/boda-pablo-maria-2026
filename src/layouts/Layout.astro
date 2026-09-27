@@ -12,10 +12,19 @@ const { title } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="color-scheme" content="light only" />
+    <meta name="color-scheme" content="only light" />
     <link rel="icon" type="image/png" href="/iconos/Anillos.png" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <!-- Vista previa al compartir el link (WhatsApp) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.site} />
+    <meta property="og:title" content="Pablo Misael &amp; María Belén" />
+    <meta property="og:image" content={new URL("/og-portada.jpg", Astro.site)} />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -39,21 +48,21 @@ const { title } = Astro.props;
     <style>
       /* FORZAR MODO CLARO - DESHABILITAR MODO OSCURO */
       :root {
-        color-scheme: light only;
+        color-scheme: only light;
       }
 
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        color-scheme: light only;
+        color-scheme: only light;
       }
 
       html {
         width: 100%;
         height: 100%;
         overflow-x: hidden;
-        color-scheme: light only;
+        color-scheme: only light;
       }
 
       body {
@@ -62,7 +71,7 @@ const { title } = Astro.props;
         width: 100%;
         min-height: 100vh;
         overflow-x: hidden;
-        color-scheme: light only;
+        color-scheme: only light;
         position: relative;
         background-color: #ffffff;
       }
@@ -91,7 +100,7 @@ const { title } = Astro.props;
       /* Prevenir cualquier cambio de color por modo oscuro */
       @media (prefers-color-scheme: dark) {
         :root {
-          color-scheme: light only !important;
+          color-scheme: only light !important;
         }
 
         html,
@@ -101,7 +110,7 @@ const { title } = Astro.props;
         }
 
         * {
-          color-scheme: light only !important;
+          color-scheme: only light !important;
         }
       }
     </style>
